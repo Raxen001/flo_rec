@@ -12,11 +12,11 @@ app.secret_key = "secret"
 def get_id(rollno):
 
     mydb = psycopg2.connect(
-        host=os.environ['DATABASE_URL'],
-        user="fl0user",
-        password="PNFY3rXkWDs2",
-        port=5432,
-        database="users",
+        host=os.environ['PGHOST'],
+        user=os.environ['PGUSER'],
+        password=os.environ['PGPASSWORD'],
+        port=os.environ['PGPORT'],
+        database=os.environ['PGDATABASE'],
         sslmode="require",
     )
 
