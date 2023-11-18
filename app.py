@@ -3,6 +3,7 @@ import requests
 # import mysql.connector
 import psycopg2
 import json
+import os
 
 app = Flask(__name__)
 app.secret_key = "secret"
@@ -11,7 +12,7 @@ app.secret_key = "secret"
 def get_id(rollno):
 
     mydb = psycopg2.connect(
-        host="ep-yellow-wave-54660248.ap-southeast-1.aws.neon.fl0.io",
+        host=os.environ['DATABASE_URL'],
         user="fl0user",
         password="PNFY3rXkWDs2",
         port=5432,
@@ -33,6 +34,10 @@ def get_id(rollno):
 
     print(person_id[0])
     return person_id[0]
+
+@app.route('/')
+def home():
+    return "welcome to the home page hopefully this fucking thing works"
 
 
 @app.route('/internal-marks/<int:rollno>')
@@ -209,4 +214,6 @@ def get_attendance(rollno):
     return data
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, debug=True)
+
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)
